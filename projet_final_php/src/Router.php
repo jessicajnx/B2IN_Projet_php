@@ -1,12 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Core;
 
 class Router {
     public static function route($url) {
         $routes = [
             '/' => ['controller' => 'TaskController', 'method' => 'listTasks'],
             '/add' => ['controller' => 'TaskController', 'method' => 'addTask'],
+            '/update' => ['controller' => 'TaskController', 'method' => 'updateTask'],
             '/delete' => ['controller' => 'TaskController', 'method' => 'deleteTask'],
         ];
 

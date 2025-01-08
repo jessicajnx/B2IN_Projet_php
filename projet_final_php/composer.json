@@ -1,16 +1,11 @@
 {
-    "name": "user/projet_final",
-    "description": "A simple ToDo list application using PHP MVC and Twig",
+    "name": "user/todolist-mvc",
+    "description": "A simple ToDo list application in PHP",
     "type": "project",
-    "require": {
-        "twig/twig": "^3.0"
-    },
+    "require": {},
     "autoload": {
         "psr-4": {
             "App\\": "src/"
         }
-    },
-    "scripts": {
-        "start": "php -S localhost:8000 -t public/"
     }
 }

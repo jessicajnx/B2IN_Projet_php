@@ -3,36 +3,37 @@
 namespace App\Controller;
 
 use App\Model\TaskModel;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 
 class TaskController {
-    private $twig;
-
-    public function __construct() {
-        $loader = new FilesystemLoader(__DIR__ . '/../../templates');
-        $this->twig = new Environment($loader);
-    }
-
     public function listTasks() {
         $tasks = TaskModel::getAll();
-        echo $this->twig->render('list.html.twig', ['tasks' => $tasks]);
+        include __DIR__ . '/../../public/views/list.php';
     }
 
     public function addTask() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $taskName = $_POST['task_name'];
-            TaskModel::add($taskName);
+            $taskDate = date('Y-m-d H:i:s');
+            TaskModel::add($taskName, $taskDate);
             header('Location: /');
             exit;
         }
-        echo $this->twig->render('add.html.twig');
+        include __DIR__ . '/../../public/views/add.php';
+    }
+
+    public function updateTask() {
+        $id = $_GET['id'] ?? null;
+        if ($id) {
+            TaskModel::toggleCompleted($id);
+            header('Location: /');
+            exit;
+        }
     }
 
     public function deleteTask() {
-        $taskId = $_GET['id'] ?? null;
-        if ($taskId) {
-            TaskModel::delete($taskId);
+        $id = $_GET['id'] ?? null;
+        if ($id) {
+            TaskModel::delete($id);
             header('Location: /');
             exit;
         }

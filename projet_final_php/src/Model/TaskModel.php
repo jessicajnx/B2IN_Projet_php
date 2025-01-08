@@ -3,22 +3,33 @@
 namespace App\Model;
 
 class TaskModel {
-    private static $tasks = [
-        ['id' => 1, 'name' => 'Acheter du lait'],
-        ['id' => 2, 'name' => 'Réviser pour l\'examen'],
-    ];
+    private static $tasks = [];
 
     public static function getAll() {
         return self::$tasks;
     }
 
-    public static function add($taskName) {
-        self::$tasks[] = ['id' => count(self::$tasks) + 1, 'name' => $taskName];
+    public static function add($name, $date) {
+        self::$tasks[] = [
+            'id' => count(self::$tasks) + 1,
+            'name' => $name,
+            'date' => $date,
+            'completed' => false,
+        ];
     }
 
-    public static function delete($taskId) {
-        self::$tasks = array_filter(self::$tasks, function($task) use ($taskId) {
-            return $task['id'] != $taskId;
+    public static function toggleCompleted($id) {
+        foreach (self::$tasks as &$task) {
+            if ($task['id'] == $id) {
+                $task['completed'] = !$task['completed'];
+                break;
+            }
+        }
+    }
+
+    public static function delete($id) {
+        self::$tasks = array_filter(self::$tasks, function($task) use ($id) {
+            return $task['id'] != $id;
         });
     }
 }
