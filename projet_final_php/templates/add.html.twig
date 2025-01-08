@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <form action="/add" method="POST">
+        <label for="task_name">Nom de la tâche :</label>
+        <input type="text" id="task_name" name="task_name" required>
+        <button type="submit">Ajouter</button>
+    </form>
+    <a href="/">Retour à la liste</a>
+{% endblock %}
