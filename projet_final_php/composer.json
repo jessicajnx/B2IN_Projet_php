@@ -1,11 +1,4 @@
 {
-    "name": "user/todolist-mvc",
-    "description": "A simple ToDo list application in PHP",
-    "type": "project",
-    "require": {},
-    "autoload": {
-        "psr-4": {
-            "App\\": "src/"
-        }
-    }
+    "name": "simple/todo-mvc",
+    "require": {}
 }
