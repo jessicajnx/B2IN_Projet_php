@@ -2,24 +2,27 @@
 
 class Router
 {
-    public function route($uri)
+    private $routes = [];
+
+    public function add($route, $action)
     {
-        $routes = [
-            '/' => ['TodoController', 'index'],
-            '/add' => ['TodoController', 'add'],
-            '/toggle' => ['TodoController', 'toggle']
-        ];
+        $this->routes[$route] = $action;
+    }
 
-        $uri = strtok($uri, '?'); // Retire les paramètres GET
+    public function dispatch($uri)
+    {
+        if (array_key_exists($uri, $this->routes)) {
+            list($controller, $method) = explode('@', $this->routes[$uri]);
 
-        if (array_key_exists($uri, $routes)) {
-            $controllerName = $routes[$uri][0];
-            $method = $routes[$uri][1];
-            require_once "controllers/$controllerName.php";
-            $controller = new $controllerName();
-            $controller->$method();
+            if ($controller === 'TodoController') {
+                require_once 'TodoController.php';
+                $controllerInstance = new TodoController();
+                $controllerInstance->$method();
+            } else {
+                echo "Controller $controller non trouvé.";
+            }
         } else {
-            require_once 'views/error404.php';
+            require 'error404.php';
         }
     }
 }
